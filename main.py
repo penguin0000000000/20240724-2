@@ -20,17 +20,17 @@ ages = ['2024년06월_계_' + selected_age + '세']
 region_data = data[data['행정구역'] == selected_region]
 
 # 해당 연령 인구수
-middle_school_population = region_data[ages].apply(lambda x: x.str.replace(',', '').astype(int)).sum(axis=1).values[0]
+population = region_data[ages].apply(lambda x: x.str.replace(',', '').astype(int)).sum(axis=1).values[0]
 
 # 총 인구수
 total_population = int(region_data['2024년06월_계_총인구수'].str.replace(',', '').values[0])
 
 # 비율 계산
-middle_school_ratio = (middle_school_population / total_population) * 100
+ratio = (population / total_population) * 100
 
 # 원 그래프 생성
-labels = ['중학생 연령대', '기타 연령대']
-sizes = [middle_school_ratio, 100 - middle_school_ratio]
+labels = ['해당 연령대', '기타 연령대']
+sizes = [ratio, 100 - ratio]
 colors = ['#ff9999','#66b3ff']
 explode = (0.1, 0)
 
