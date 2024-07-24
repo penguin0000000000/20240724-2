@@ -13,8 +13,7 @@ data = pd.read_csv(file_path, encoding='cp949')
 # Preprocess the data
 age_columns = [f'2024년06월_계_{i}세' for i in range(0, 100)] + ['2024년06월_계_100세 이상']
 data = data[['행정구역'] + age_columns]
-data.columns = ['Region'] + list(range(100)) + ['100+']
-
+data.columns = ['Region'] + list(range(100))
 # Calculate middle school population (ages 12 to 14)
 data['MiddleSchool'] = data[12] + data[13] + data[14]
 
@@ -29,7 +28,7 @@ selected_region = st.selectbox('Select a region:', regions)
 region_data = data[data['Region'] == selected_region]
 
 if not region_data.empty:
-    total_population = region_data.iloc[0, 1:101].sum()
+    total_population = region_data[range(101)].sum(axis=1).values[0]
     middle_school_population = region_data['MiddleSchool'].values[0]
     other_population = total_population - middle_school_population
 
