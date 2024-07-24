@@ -13,7 +13,7 @@ data = pd.read_csv(file_path, encoding='cp949')
 # Preprocess the data
 age_columns = [f'2024년06월_계_{i}세' for i in range(0, 100)] + ['2024년06월_계_100세 이상']
 data = data[['행정구역'] + age_columns]
-data.columns = ['Region'] + list(range(101)) + ['100+']
+data.columns = ['Region'] + list(range(102)) + ['100+']
 
 # Calculate middle school population (ages 12 to 14)
 data['MiddleSchool'] = data[12] + data[13] + data[14]
