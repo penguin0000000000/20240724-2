@@ -10,18 +10,17 @@ import koreanize_matplotlib
 file_path = '202406_202406_연령별인구현황_월간.csv'
 data = pd.read_csv(file_path, encoding='euc-kr')
 
-# 중학생 연령대 추출
-middle_school_ages = ['2024년06월_계_12세', '2024년06월_계_13세', '2024년06월_계_14세']
-
 # 지역 선택
 st.title("중학생 연령대 인구 비율")
 selected_region = st.selectbox('지역을 선택하세요:', data['행정구역'].unique())
+selected_age = st.text_input('나이를 입력하세요:')
+ages = ['2024년06월_계_' + selected_age + '세']
 
 # 선택한 지역의 데이터 추출
 region_data = data[data['행정구역'] == selected_region]
 
-# 중학생 연령대 인구수 합계
-middle_school_population = region_data[middle_school_ages].apply(lambda x: x.str.replace(',', '').astype(int)).sum(axis=1).values[0]
+# 해당 연령 인구수
+middle_school_population = region_data[ages].apply(lambda x: x.str.replace(',', '').astype(int)).sum(axis=1).values[0]
 
 # 총 인구수
 total_population = int(region_data['2024년06월_계_총인구수'].str.replace(',', '').values[0])
