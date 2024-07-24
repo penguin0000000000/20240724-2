@@ -13,7 +13,7 @@ data = pd.read_csv(file_path, encoding='euc-kr')
 # 지역 선택
 st.title("특정 연령 인구 비율")
 selected_region = st.selectbox('지역을 선택하세요:', data['행정구역'].unique())
-selected_age = st.text_input('나이를 입력하세요:')
+selected_age = st.text_input('나이를 입력하세요(숫자만):')
 ages = ['2024년06월_계_' + selected_age + '세']
 
 # 선택한 지역의 데이터 추출
