@@ -11,7 +11,7 @@ file_path = '202406_202406_연령별인구현황_월간.csv'
 data = pd.read_csv(file_path, encoding='euc-kr')
 
 # 지역 선택
-st.title("중학생 연령대 인구 비율")
+st.title("특정 연령 인구 비율")
 selected_region = st.selectbox('지역을 선택하세요:', data['행정구역'].unique())
 selected_age = st.text_input('나이를 입력하세요:')
 ages = ['2024년06월_계_' + selected_age + '세']
