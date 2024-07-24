@@ -29,7 +29,7 @@ selected_region = st.selectbox('Select a region:', regions)
 region_data = data[data['Region'] == selected_region]
 
 if not region_data.empty:
-    total_population = region_data[range(101)].sum(axis=1).values[0]
+    total_population = region_data.iloc[0, 1:101].sum()
     middle_school_population = region_data['MiddleSchool'].values[0]
     other_population = total_population - middle_school_population
 
