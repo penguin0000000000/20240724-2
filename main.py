@@ -6,45 +6,39 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import koreanize_matplotlib
 
-# Load the dataset
-@st.cache
-def load_data():
-    data = pd.read_csv('202406_202406_연령별인구현황_월간.csv', encoding='cp949')
-    return data
+# 데이터 로드
+file_path = '202406_202406_연령별인구현황_월간.csv'
+data = pd.read_csv(file_path, encoding='euc-kr')
 
-data = load_data()
+# 중학생 연령대 추출
+middle_school_ages = ['2024년06월_계_12세', '2024년06월_계_13세', '2024년06월_계_14세']
 
-# Display the dataset for reference
-st.write("## Dataset", data.head())
+# 지역 선택
+st.title("중학생 연령대 인구 비율")
+selected_region = st.selectbox('지역을 선택하세요:', data['행정구역'].unique())
 
-# Extract relevant columns
-# Adjust these column names based on the actual dataset structure
-regions = data['행정구역']
-middle_school_population = data['중학생 인구수']
+# 선택한 지역의 데이터 추출
+region_data = data[data['행정구역'] == selected_region]
 
-# Sidebar for user input
-st.sidebar.header('Select Region')
-selected_region = st.sidebar.selectbox('Region', regions.unique())
+# 중학생 연령대 인구수 합계
+middle_school_population = region_data[middle_school_ages].apply(lambda x: x.str.replace(',', '').astype(int)).sum(axis=1).values[0]
 
-# Filter data for the selected region
-filtered_data = data[data['행정구역'] == selected_region]
+# 총 인구수
+total_population = int(region_data['2024년06월_계_총인구수'].str.replace(',', '').values[0])
 
-# Calculate the population ratio
-total_population = filtered_data['총인구수'].values[0]
-middle_school_population = filtered_data['중학생 인구수'].values[0]
-other_population = total_population - middle_school_population
+# 비율 계산
+middle_school_ratio = (middle_school_population / total_population) * 100
 
-# Pie chart data
-labels = ['Middle School Population', 'Other Population']
-sizes = [middle_school_population, other_population]
+# 원 그래프 생성
+labels = ['중학생 연령대', '기타 연령대']
+sizes = [middle_school_ratio, 100 - middle_school_ratio]
 colors = ['#ff9999','#66b3ff']
-explode = (0.1, 0) # explode the 1st slice
+explode = (0.1, 0)
 
-# Plot pie chart
 fig1, ax1 = plt.subplots()
 ax1.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%',
-shadow=True, startangle=90)
-ax1.axis('equal') # Equal aspect ratio ensures that pie is drawn as a circle.
+        shadow=True, startangle=140)
+ax1.axis('equal')
 
-st.write(f"## Middle School Population Ratio in {selected_region}")
+# 그래프 출력
 st.pyplot(fig1)
