@@ -11,7 +11,7 @@ file_path = '202406_202406_연령별인구현황_월간.csv'
 data = pd.read_csv(file_path, encoding='cp949')
 
 # Preprocess the data
-age_columns = [f'2024년06월_계_{i}세' for i in range(0, 101)] + ['2024년06월_계_100세 이상']
+age_columns = [f'2024년06월_계_{i}세' for i in range(0, 100)] + ['2024년06월_계_100세 이상']
 data = data[['행정구역'] + age_columns]
 data.columns = ['Region'] + list(range(101)) + ['100+']
 
