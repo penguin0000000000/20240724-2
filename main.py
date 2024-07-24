@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import koreanize_matplotlib
 
 # Load the data
-file_path = 'path_to_your_file/202406_202406_연령별인구현황_월간.csv'
+file_path = '202406_202406_연령별인구현황_월간.csv'
 data = pd.read_csv(file_path, encoding='cp949')
 
 # Preprocess the data
