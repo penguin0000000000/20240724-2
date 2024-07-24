@@ -10,7 +10,7 @@ import koreanize_matplotlib
 @st.cache
 def load_data():
     data = pd.read_csv('202406_202406_연령별인구현황_월간.csv', encoding='cp949')
-return data
+    return data
 
 data = load_data()
 
